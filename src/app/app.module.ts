@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { DataTablesModule } from 'angular-datatables';
 import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
+
 
 import { AppComponent } from './app.component';
 
@@ -12,9 +14,13 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
+    DataTablesModule,
     HttpModule,
-    DataTablesModule
-  ],
+    RouterModule.forRoot(
+      [
+        { path: '', component: AppComponent}
+      ]
+    )  ],
   providers: [],
   bootstrap: [ AppComponent ]
 })

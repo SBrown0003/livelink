@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs';
 import { Person } from './person';
+import { ActivatedRoute } from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
@@ -19,7 +20,7 @@ export class AppComponent implements OnDestroy, OnInit {
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.dtOptions = {
