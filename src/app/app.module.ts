@@ -18,9 +18,17 @@ import { AppComponent } from './app.component';
     HttpModule,
     RouterModule.forRoot(
       [
-        { path: '', component: AppComponent}
+        { path: ':campid', component: AppComponent},
+        { path: 'live/:campid',
+          component: AppComponent
+          // resolve: {
+          //   live: 'live'
+          // }
+        }
       ]
-    )  ],
+    )
+  ],
+  exports: [ RouterModule ],
   providers: [],
   bootstrap: [ AppComponent ]
 })

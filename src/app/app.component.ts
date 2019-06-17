@@ -3,8 +3,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Subject } from 'rxjs';
 import { Person } from './person';
-import { ActivatedRoute } from "@angular/router";
-import {HttpClient} from "@angular/common/http";
+import { ActivatedRoute } from '@angular/router';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,8 @@ import {HttpClient} from "@angular/common/http";
 export class AppComponent implements OnDestroy, OnInit {
   title = 'live-link';
 
-  dtOptions: DataTables.Settings = {};
+  // dtOptions: DataTables.Settings = {};
+  dtOptions: any = {};
   persons: Person[] = [];
   // We use this trigger because fetching the list of persons can be quite long,
   // thus we ensure the data is fetched before rendering
@@ -23,17 +24,51 @@ export class AppComponent implements OnDestroy, OnInit {
   constructor(private http: Http, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    let campID = '';
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 50
+      pageLength: 20,
+      dom: 'Bfrtip',
+      // Configure the buttons
+      buttons: [
+        'colvis',
+        'copy',
+        'print',
+        'excel',
+        'csv'
+      ],
+      responsive: true
+      // responsive: {
+      //   details: {
+      //     display: $.fn.dataTable.Responsive.display.modal( {
+      //       header: function ( row ) {
+      //         let data = row.data();
+      //         return 'Details for ' + data[0] + ' ' + data[1];
+      //       }
+      //     } ),
+      //     renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+      //       tableClass: 'table'
+      //     } )
+      //   }
+      // }
     };
-    this.http.get('data/data.json')
-      .map(this.extractData)
-      .subscribe(persons => {
-        this.persons = persons;
-        // Calling the DT trigger to manually render the table
-        this.dtTrigger.next();
-      });
+    this.route.queryParamMap.subscribe((queryParam: any) => {
+      if (!!queryParam && !!queryParam.params) {
+        campID = queryParam.params.campid;
+        console.log(JSON.stringify(campID));
+      }
+      this.http.get(`data/data.json?campid=${campID}`)
+      // this.http.get(`data/data.json`)
+        .map(this.extractData)
+        .subscribe(persons => {
+          this.persons = persons;
+          // Calling the DT trigger to manually render the table
+          this.dtTrigger.next();
+          if (typeof campID !== 'undefined') {
+            this.dtTrigger.complete();
+          }
+        });
+    });
   }
 
   ngOnDestroy(): void {
