@@ -1,13 +1,12 @@
 export class Person {
-  registrationID: number;
-  email: string;
-  firstName: string;
-  lastName: string;
-  phone: string;
-  postalCode: string;
-  appointmentDate: string;
-  appointmentTime: string;
-  appointmentLocation: string;
-  timezone: string;
+  registration_id: string;
+  anon_mail: string;
+  field_anon_firstname: string;
+  field_anon_lastname: string;
+  field_anon_phone: string;
+  postal_code: string;
+  field_appointment_date: string;
+  field_appointment_time: string;
+  field_appointment_location: string;
 }
 

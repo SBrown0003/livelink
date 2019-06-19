@@ -21,9 +21,6 @@ import { AppComponent } from './app.component';
         { path: ':campid', component: AppComponent},
         { path: 'live/:campid',
           component: AppComponent
-          // resolve: {
-          //   live: 'live'
-          // }
         }
       ]
     )

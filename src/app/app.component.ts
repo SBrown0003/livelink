@@ -14,7 +14,6 @@ import {HttpClient} from '@angular/common/http';
 export class AppComponent implements OnDestroy, OnInit {
   title = 'live-link';
 
-  // dtOptions: DataTables.Settings = {};
   dtOptions: any = {};
   persons: Person[] = [];
   // We use this trigger because fetching the list of persons can be quite long,
@@ -34,23 +33,21 @@ export class AppComponent implements OnDestroy, OnInit {
         'colvis',
         'copy',
         'print',
-        'excel',
         'csv'
       ],
-      responsive: true
-      // responsive: {
-      //   details: {
-      //     display: $.fn.dataTable.Responsive.display.modal( {
-      //       header: function ( row ) {
-      //         let data = row.data();
-      //         return 'Details for ' + data[0] + ' ' + data[1];
-      //       }
-      //     } ),
-      //     renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
-      //       tableClass: 'table'
-      //     } )
-      //   }
-      // }
+      responsive: {
+        details: {
+          display: $.fn.dataTable.Responsive.display.modal( {
+            header: function ( row ) {
+              let data = row.data();
+              return 'Details for ' + data[0] + ' ' + data[1];
+            }
+          } ),
+          renderer: $.fn.dataTable.Responsive.renderer.tableAll( {
+            tableClass: 'table'
+          } )
+        }
+      }
     };
     this.route.queryParamMap.subscribe((queryParam: any) => {
       if (!!queryParam && !!queryParam.params) {
@@ -58,6 +55,7 @@ export class AppComponent implements OnDestroy, OnInit {
         console.log(JSON.stringify(campID));
       }
       this.http.get(`data/data.json?campid=${campID}`)
+      // this.http.get(`http://vtools.lndo.site/api/registration?campaign_id=23830`)
       // this.http.get(`data/data.json`)
         .map(this.extractData)
         .subscribe(persons => {

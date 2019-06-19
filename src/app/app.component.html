@@ -24,22 +24,19 @@
               <th>Appointment Date</th>
               <th>Appointment Time</th>
               <th>Appointment Location</th>
-              <th>Timezone</th>
-
             </tr>
             </thead>
             <tbody>
             <tr *ngFor="let person of persons">
-              <td>{{ person.registrationID }}</td>
-              <td>{{ person.firstName }}</td>
-              <td>{{ person.lastName }}</td>
-              <td>{{ person.email }}</td>
-              <td>{{ person.phone }}</td>
-              <td>{{ person.postalCode }}</td>
-              <td>{{ person.appointmentDate }}</td>
-              <td>{{ person.appointmentTime }}</td>
-              <td>{{ person.appointmentLocation }}</td>
-              <td>{{ person.timezone }}</td>
+              <td>{{ person.registration_id }}</td>
+              <td>{{ person.field_anon_firstname }}</td>
+              <td>{{ person.field_anon_lastname }}</td>
+              <td>{{ person.anon_mail }}</td>
+              <td>{{ person.field_anon_phone }}</td>
+              <td>{{ person.postal_code }}</td>
+              <td>{{ person.field_appointment_date }}</td>
+              <td>{{ person.field_appointment_time }}</td>
+              <td>{{ person.field_appointment_location }}</td>
             </tr>
             </tbody>
           </table>
