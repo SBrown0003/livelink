@@ -2,31 +2,37 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { DataTablesModule } from 'angular-datatables';
-import { HttpModule } from '@angular/http';
+import { HttpModule, JsonpModule, Jsonp } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'; 
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { routing } from './app.routes'; 
+import { CampaignService } from "./campaign/campaign.service";
+
 
 
 import { AppComponent } from './app.component';
+import { CampaignComponent } from './campaign/campaign.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CampaignComponent
   ],
   imports: [
     BrowserModule,
     DataTablesModule,
     HttpModule,
-    RouterModule.forRoot(
-      [
-        { path: ':campid', component: AppComponent},
-        { path: 'live/:campid',
-          component: AppComponent
-        }
-      ]
-    )
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    routing,
+    JsonpModule,
+    HttpClientJsonpModule
   ],
   exports: [ RouterModule ],
-  providers: [],
+  providers: [CampaignService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
