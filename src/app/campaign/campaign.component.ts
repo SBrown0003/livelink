@@ -47,6 +47,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 5,
       processing: true,
+      autoWidth: true
     };
 
     const httpOptions = {
@@ -54,11 +55,19 @@ export class CampaignComponent implements OnInit, OnDestroy {
           'Content-Type':  'application/json',
         })
       };
-
-      this.campaignService.getCampaignUsers("233").subscribe((res) => {
-        this.users$ = res['data'];
-        this.dtTrigger.next();       
-      });  
+      const routeParams = this.route.snapshot.params;
+      if (routeParams) {
+        this.campaignService.getCampaignUsers(routeParams.id).subscribe((res) => {
+          if(res['status'] == 1 ){
+            this.users$ = res['data'];
+            this.dtTrigger.next();  
+          }else{
+            alert(res['msg']);
+          }  
+        });  
+      }else{
+        alert("Missing campaign Id");
+      }
 }
 
   ngOnDestroy(): void {

@@ -14,11 +14,13 @@ import { CampaignService } from "./campaign/campaign.service";
 
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
+import { ErrorpageComponent } from './errorpage/errorpage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CampaignComponent
+    CampaignComponent,
+    ErrorpageComponent
   ],
   imports: [
     BrowserModule,
