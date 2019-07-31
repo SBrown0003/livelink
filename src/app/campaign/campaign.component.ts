@@ -47,7 +47,20 @@ export class CampaignComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       pageLength: 5,
       processing: true,
-      autoWidth: true
+      autoWidth: true,
+      dom: 'Bfrtip',
+     buttons: [
+       'pageLength',
+      // ‘excel’,
+       {
+           extend: "csvHtml5",
+           fileName:  "CustomFileName" + ".xlsx",
+           exportOptions: {
+               columns:[0,1,2,3,4,5,6,7,8,9]
+           },
+           exportData: {decodeEntities:true}
+       }
+     ]
     };
 
     const httpOptions = {
