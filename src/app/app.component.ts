@@ -1,7 +1,7 @@
 import 'rxjs-compat';
-import { Component, OnDestroy, OnInit,TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { RequestOptions,Http, Response } from '@angular/http';
+import { RequestOptions, Http, Response } from '@angular/http';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Person } from './person';
@@ -18,7 +18,7 @@ import { NgbModalConfig, NgbModal, ModalDismissReasons, NgbActiveModal } from '@
 export class AppComponent {
 
   users$: any[] = [];
-  //dtOptions: DataTables.Settings = {};
+  // dtOptions: DataTables.Settings = {};
   dtOptions: any;
   dtTrigger: Subject<any> = new Subject();
   persons: Person[] = [];
@@ -26,9 +26,7 @@ export class AppComponent {
   closeResult: string;
   userDetail: any;
 
-  @ViewChild('editModal', { static: false, }) editModal : TemplateRef<any>; // Note: TemplateRef
-  constructor(private http: HttpClient,private route: ActivatedRoute, private modalService: NgbModal) {
+  @ViewChild('editModal', { static: false, }) editModal: TemplateRef<any>; // Note: TemplateRef
+  constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal) {
   }
-  
-
 }

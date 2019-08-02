@@ -4,11 +4,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpModule, JsonpModule, Jsonp } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http'; 
+import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { routing } from './app.routes'; 
-import { CampaignService } from "./campaign/campaign.service";
+import { routing } from './app.routes';
+import { CampaignService } from './campaign/campaign.service';
 
 
 
@@ -25,12 +25,10 @@ import { ErrorpageComponent } from './errorpage/errorpage.component';
   imports: [
     BrowserModule,
     DataTablesModule,
-    HttpModule,
     HttpClientModule,
     FormsModule,
     NgbModule,
     routing,
-    JsonpModule,
     HttpClientJsonpModule
   ],
   exports: [ RouterModule ],

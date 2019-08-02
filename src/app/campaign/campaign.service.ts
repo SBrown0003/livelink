@@ -1,16 +1,33 @@
-import { Injectable }    from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Jsonp, URLSearchParams } from '@angular/http';
 import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
+import { HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class CampaignService {
-  constructor(private jsonp: Jsonp, private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-   private baseUrl = 'https://vtools.lndo.site/api/registration';
-//  private baseUrl = 'https://api.myjson.com/bins/8ogsh';
+   private baseUrl = 'http://vtools.lndo.site/api/registration';
+  //  private baseUrl = 'https://api.myjson.com/bins/8ogsh';
   // get a pet based on their id
    getCampaignUsers(id: string) {
-    let param = '?campaign_id='+id;
-    return this.http.get(this.baseUrl+param);
+    const param = '?campaign_id=' + id;
+    return this.http.get(this.baseUrl + param);
+  }
+
+  async updateUserState() {
+    const userData: object = {
+      rid: 24862,
+      values: [
+        {
+          field: 'state',
+          value: 'rejected_spam'
+        }
+      ]
+    };
+    await this.http.put(this.baseUrl, JSON.stringify(userData)).subscribe((data) => {
+      // console.log(data);
+    });
   }
 }
