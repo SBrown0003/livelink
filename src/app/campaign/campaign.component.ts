@@ -1,13 +1,14 @@
 import 'rxjs-compat';
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-import { RequestOptions, Http, Response } from '@angular/http';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalConfig, NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CampaignService } from './campaign.service';
 import { Observable } from 'rxjs/Observable';
+import { TitleCasePipe } from '@angular/common';
+
 
 @Component({
   selector: 'app-campaign',
@@ -31,7 +32,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
   users: Observable<string[]>;
   @ViewChild('editModal', { static: false, }) editModal: TemplateRef<any>; // Note: TemplateRef
   constructor(private http: HttpClient, private route: ActivatedRoute,
-              private modalService: NgbModal, private campaignService: CampaignService) {  }
+              private modalService: NgbModal, private campaignService: CampaignService, private titlecasePipe:TitleCasePipe) {  }
 
   open(content, user) {
     this.userDetail = user;
@@ -86,5 +87,13 @@ export class CampaignComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  getKeyName(key){
+    if(key in this.users$['field_name_mapping']){
+      return this.users$['field_name_mapping'][key].name;
+    }else{
+      return this.titlecasePipe.transform(key.replace('_',' '));
+    }
   }
 }

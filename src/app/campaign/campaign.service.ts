@@ -9,7 +9,6 @@ export class CampaignService {
   constructor(private http: HttpClient) { }
 
    private baseUrl = 'http://vtools.lndo.site/api/registration';
-  //  private baseUrl = 'https://api.myjson.com/bins/8ogsh';
   // get a pet based on their id
    getCampaignUsers(id: string) {
     const param = '?campaign_id=' + id;

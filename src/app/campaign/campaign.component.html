@@ -2,12 +2,12 @@
   <div class="container">
     <div class="row">
       <div class="col s12 m9">
-        <h1 class="header center-on-small-only">Live Link</h1>
+        <h1 class="header">Live Link</h1>
       </div>
     </div>
   </div>
 </div>
-<div class="container">
+<div class="section">
   <div class="row">
     <div class="col s12 m9 l12">
       <div class="section">
@@ -32,7 +32,7 @@
               <tr *ngFor="let user of users$.list">
                 <td>{{ user.registration_id }}</td>
                 <td>{{ user.field_anon_firstname }}</td>
-                <td>{{field_anon_lastname}}</td>
+                <td>{{user.field_anon_lastname}}</td>
                 <td>{{ user.anon_mail }}</td>
                 <td>{{ user.field_anon_phone }}</td>
                 <td>{{ user.postal_code }}</td>
@@ -61,45 +61,10 @@
   </div>
   <div class="modal-body">
     <table class="table table-striped">
-      <tr>
-        <th scope="col">Registration ID</th>
-        <td scope="col">{{userDetail.registration_id}}</td>
-      </tr>
-      <tr>
-        <th scope="col">First Name</th>
-        <td scope="col">{{userDetail.field_anon_firstname}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Last Name</th>
-        <td scope="col">{{userDetail.field_anon_lastname}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Email</th>
-        <td scope="col">{{userDetail.anon_mail}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Phone</th>
-        <td scope="col">{{userDetail.field_anon_phone}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Appointment Location</th>
-        <td scope="col">{{userDetail.field_appointment_location}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Appointment Date</th>
-        <td scope="col">{{userDetail.field_appointment_date}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Appointment Time</th>
-        <td scope="col">{{userDetail.field_appointment_time}}</td>
-      </tr>
-      <tr>
-        <th scope="col">Registration State</th>
-        <td scope="col">{{userDetail.state}}</td>
+      <tr *ngFor="let u of userDetail | keyvalue">
+          <th scope="col" [innerHtml]="getKeyName(u.key)"></th>
+          <td scope="col">{{u.value}}</td>
       </tr>
     </table>
   </div>
-    <!-- <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="c('Save click')">Save</button>
-    </div> -->
 </ng-template>
