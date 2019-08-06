@@ -9,4 +9,3 @@ export class Person {
   field_appointment_time: string;
   field_appointment_location: string;
 }
-
