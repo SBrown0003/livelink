@@ -24,7 +24,7 @@
                 <th>Appointment Date</th>
                 <th>Appointment Time</th>
                 <th>Location</th>
-                <th>State</th>
+                <th>Lead Status</th>
                 <th>View Detail</th>
               </tr>
             </thead>
@@ -32,16 +32,22 @@
               <tr *ngFor="let user of users$.list">
                 <td>{{ user.registration_id }}</td>
                 <td>{{ user.field_anon_firstname }}</td>
-                <td>{{user.field_anon_lastname}}</td>
+                <td>{{ user.field_anon_lastname }}</td>
                 <td>{{ user.anon_mail }}</td>
                 <td>{{ user.field_anon_phone }}</td>
                 <td>{{ user.postal_code }}</td>
                 <td>{{ user.field_appointment_date }}</td>
                 <td>{{ user.field_appointment_time }}</td>
                 <td>{{ user.field_appointment_location }}</td>
-                <td>{{ user.state }}</td>
+                <td>
+                  <select [(ngModel)]="user.state.key" id="{{user.registration_id}}" (change) = "onStateChange(user.registration_id, $event.target.value)" >
+                    <option *ngFor="let state of registrationStates" [value]="state.key" >
+                      {{ state.value }}
+                    </option>
+                  </select>
+                </td>
                 <th>
-                  <button class="btn btn-small btn-outline-primary" (click)="open(content,user)">Detail</button>
+                  <button class="btn btn-small btn-outline-primary" (click)="open(content, user)">Detail</button>
                 </th>
               </tr>
             </tbody>
@@ -62,8 +68,10 @@
   <div class="modal-body">
     <table class="table table-striped">
       <tr *ngFor="let u of userDetail | keyvalue">
-          <th scope="col" [innerHtml]="getKeyName(u.key)"></th>
-          <td scope="col">{{u.value}}</td>
+          <th scope="col" *ngIf="getKeyName(u.key) == 'State' else normalKey" >Lead Status</th>
+          <ng-template #normalKey><th scope="col" [innerHtml]="getKeyName(u.key)"></th></ng-template>
+          <td *ngIf="getKeyName(u.key) === 'State' else normalValue" scope="col">{{u.value.value}}</td>
+          <ng-template #normalValue><td>{{u.value}}</td></ng-template>
       </tr>
     </table>
   </div>

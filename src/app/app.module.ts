@@ -8,7 +8,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routing } from './app.routes';
 import { CampaignService } from './campaign/campaign.service';
-import { TitleCasePipe } from '@angular/common'
+import { TitleCasePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
@@ -30,7 +30,7 @@ import { ErrorpageComponent } from './errorpage/errorpage.component';
     HttpClientJsonpModule
   ],
   exports: [ RouterModule ],
-  providers: [CampaignService,TitleCasePipe],
+  providers: [CampaignService, TitleCasePipe],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}

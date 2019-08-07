@@ -21,7 +21,7 @@ import { TitleCasePipe } from '@angular/common';
 export class CampaignComponent implements OnInit, OnDestroy {
 
   users$: any[] = [];
-  data: any;
+  registrationStates: any[] = [];
   // dtOptions: DataTables.Settings = {};
   dtOptions: any;
   dtTrigger: Subject<any> = new Subject();
@@ -32,7 +32,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
   users: Observable<string[]>;
   @ViewChild('editModal', { static: false, }) editModal: TemplateRef<any>; // Note: TemplateRef
   constructor(private http: HttpClient, private route: ActivatedRoute,
-              private modalService: NgbModal, private campaignService: CampaignService, private titlecasePipe:TitleCasePipe) {  }
+              private modalService: NgbModal, private campaignService: CampaignService, private titlecasePipe: TitleCasePipe) {  }
 
   open(content, user) {
     this.userDetail = user;
@@ -70,30 +70,43 @@ export class CampaignComponent implements OnInit, OnDestroy {
       this.campaignService.getCampaignUsers(routeParams.id).subscribe((res) => {
         if (res['status'] === 1 ) {
           res['data'].list = res['data'].list.map(user => {
-            user.state = res['data'].org_registration_states[user.state];
+            const state: object = {
+              key: user.state,
+              value: res['data'].org_registration_states[user.state]
+            };
+            user.state = state;
             return user;
           });
+          for (const machineState in res['data'].org_registration_states) {
+            this.registrationStates.push({
+              key: machineState,
+              value: res['data'].org_registration_states[machineState]
+            });
+          }
           this.users$ = res['data'];
           this.dtTrigger.next();
         } else {
           alert(res['msg']);
         }
       });
-      // this.campaignService.updateUserState();
     } else {
         alert('Missing campaign Id');
     }
 }
 
-  ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
+  getKeyName(key: any) {
+    if (key in this.users$['field_name_mapping']) {
+      return this.users$['field_name_mapping'][key].name;
+    } else {
+      return this.titlecasePipe.transform(key.replace('_', ' '));
+    }
   }
 
-  getKeyName(key){
-    if(key in this.users$['field_name_mapping']){
-      return this.users$['field_name_mapping'][key].name;
-    }else{
-      return this.titlecasePipe.transform(key.replace('_',' '));
-    }
+  onStateChange(registrationId: any, state: any) {
+    this.campaignService.updateUserState(registrationId, state);
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 }

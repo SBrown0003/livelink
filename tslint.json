@@ -16,6 +16,7 @@
       "app",
       "camelCase"
     ],
+    "forin": false,
     "component-selector": [
       true,
       "element",

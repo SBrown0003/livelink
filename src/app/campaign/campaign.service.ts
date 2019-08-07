@@ -8,25 +8,25 @@ import { HttpHeaders } from '@angular/common/http';
 export class CampaignService {
   constructor(private http: HttpClient) { }
 
-   private baseUrl = 'http://vtools.lndo.site/api/registration';
+   private baseUrl = 'https://vtools.lndo.site/api/registration';
   // get a pet based on their id
    getCampaignUsers(id: string) {
     const param = '?campaign_id=' + id;
     return this.http.get(this.baseUrl + param);
   }
 
-  async updateUserState() {
+  async updateUserState(registrationId: string, state: string) {
     const userData: object = {
-      rid: 24862,
+      rid: registrationId,
       values: [
         {
           field: 'state',
-          value: 'rejected_spam'
+          value: state
         }
       ]
     };
     await this.http.put(this.baseUrl, JSON.stringify(userData)).subscribe((data) => {
-      // console.log(data);
+      console.log(data);
     });
   }
 }
