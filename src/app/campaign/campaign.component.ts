@@ -6,8 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModalConfig, NgbModal, ModalDismissReasons, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CampaignService } from './campaign.service';
-import { Observable } from 'rxjs/Observable';
 import { TitleCasePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Component({
@@ -29,10 +29,9 @@ export class CampaignComponent implements OnInit, OnDestroy {
   closeResult: string;
   userDetail: any;
 
-  users: Observable<string[]>;
   @ViewChild('editModal', { static: false, }) editModal: TemplateRef<any>; // Note: TemplateRef
-  constructor(private http: HttpClient, private route: ActivatedRoute,
-              private modalService: NgbModal, private campaignService: CampaignService, private titlecasePipe: TitleCasePipe) {  }
+  constructor(private http: HttpClient, private route: ActivatedRoute, private modalService: NgbModal,
+              private campaignService: CampaignService, private titlecasePipe: TitleCasePipe, private toaster: ToastrService) {  }
 
   open(content, user) {
     this.userDetail = user;
@@ -60,13 +59,8 @@ export class CampaignComponent implements OnInit, OnDestroy {
      ]
     };
 
-    const httpOptions = {
-        headers: new HttpHeaders({
-          'Content-Type':  'application/text',
-        })
-      };
     const routeParams = this.route.snapshot.params;
-    if (routeParams) {
+    if (routeParams && routeParams.id) {
       this.campaignService.getCampaignUsers(routeParams.id).subscribe((res) => {
         if (res['status'] === 1 ) {
           res['data'].list = res['data'].list.map(user => {
@@ -88,7 +82,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
         } else {
           alert(res['msg']);
         }
-      });
+      }, errMsg => this.toaster.error(errMsg));
     } else {
         alert('Missing campaign Id');
     }
@@ -103,7 +97,11 @@ export class CampaignComponent implements OnInit, OnDestroy {
   }
 
   onStateChange(registrationId: any, state: any) {
-    this.campaignService.updateUserState(registrationId, state);
+    this.campaignService.updateUserState(registrationId, state).subscribe(res => {
+      if (res['status'] === 1) {
+        this.toaster.info('', res['msg']);
+      }
+    }, errMsg => this.toaster.error(errMsg));
   }
 
   ngOnDestroy(): void {

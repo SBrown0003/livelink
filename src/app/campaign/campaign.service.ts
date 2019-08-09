@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Jsonp, URLSearchParams } from '@angular/http';
-import { HttpClient, HttpClientJsonpModule } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { HttpHeaders } from '@angular/common/http';
-
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs/observable';
+import 'rxjs/add/observable/throw';
+import { throwError } from 'rxjs';
 @Injectable()
 export class CampaignService {
   constructor(private http: HttpClient) { }
@@ -12,10 +12,10 @@ export class CampaignService {
   // get a pet based on their id
    getCampaignUsers(id: string) {
     const param = '?campaign_id=' + id;
-    return this.http.get(this.baseUrl + param);
+    return this.http.get(this.baseUrl + param).catch(this.errorHandler);
   }
 
-  async updateUserState(registrationId: string, state: string) {
+  updateUserState(registrationId: string, state: string) {
     const userData: object = {
       rid: registrationId,
       values: [
@@ -25,8 +25,10 @@ export class CampaignService {
         }
       ]
     };
-    await this.http.put(this.baseUrl, JSON.stringify(userData)).subscribe((data) => {
-      console.log(data);
-    });
+    return this.http.put(this.baseUrl, JSON.stringify(userData)).catch(this.errorHandler);
+  }
+
+  private errorHandler(error: HttpErrorResponse) {
+    return Observable.throwError(error.error ? error.error.msg : 'Server Error');
   }
 }
