@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 import { DataTablesModule } from 'angular-datatables';
 import { RouterModule } from '@angular/router';
@@ -8,7 +10,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { routing } from './app.routes';
 import { CampaignService } from './campaign/campaign.service';
-import { TitleCasePipe } from '@angular/common'
+import { TitleCasePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { CampaignComponent } from './campaign/campaign.component';
@@ -27,10 +29,16 @@ import { ErrorpageComponent } from './errorpage/errorpage.component';
     FormsModule,
     NgbModule,
     routing,
-    HttpClientJsonpModule
+    HttpClientJsonpModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-center',
+      preventDuplicates: true,
+    })
   ],
   exports: [ RouterModule ],
-  providers: [CampaignService,TitleCasePipe],
+  providers: [CampaignService, TitleCasePipe],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {}
