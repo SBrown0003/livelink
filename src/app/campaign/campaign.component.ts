@@ -48,14 +48,25 @@ export class CampaignComponent implements OnInit, OnDestroy {
       buttons: [
        'pageLength',
       // ‘excel’,
-       {
-           extend: 'csvHtml5',
-           fileName:  'CustomFileName' + '.xlsx',
-           exportOptions: {
-               columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-           },
-           exportData: {decodeEntities: true}
-       }
+        {
+          extend: 'csvHtml5',
+          fileName: 'CustomFileName' + '.xlsx',
+          exportOptions: {
+            format: {
+              body: (data, row, col, node) => {
+                let nodeText = '';
+                const spacer = node.childNodes.length > 1 ? ' ' : '';
+                node.childNodes.forEach(childNode => {
+                  const tempText = childNode.nodeName === 'SELECT' ? childNode.selectedOptions[0].textContent : childNode.textContent;
+                  nodeText += tempText ? `${tempText} ${spacer}` : '';
+                });
+                return nodeText;
+              }
+            },
+            columns: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+          },
+          exportData: { decodeEntities: true }
+        }
      ]
     };
 
