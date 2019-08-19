@@ -1,0 +1,14 @@
+//disable extra sorting arrows
+//table.dataTable thead .sorting,
+//table.dataTable thead .sorting_asc,
+//table.dataTable thead .sorting_desc {
+//  background : none;
+//}
+
+.dataTable > thead > tr > th[class*="sort"]:after{
+  content: "" !important;
+}
+
+.dataTable > thead > tr > th[class*="sort"]:before{
+  content: "" !important;
+}
