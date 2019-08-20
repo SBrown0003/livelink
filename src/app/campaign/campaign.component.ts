@@ -21,6 +21,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CampaignComponent implements OnInit, OnDestroy {
 
   users$: any[] = [];
+  userList: any[] = [];
   registrationStates: any[] = [];
   // dtOptions: DataTables.Settings = {};
   dtOptions: any;
@@ -89,6 +90,7 @@ export class CampaignComponent implements OnInit, OnDestroy {
             });
           }
           this.users$ = res['data'];
+          this.userList = res['data']['list'];
           this.dtTrigger.next();
         } else {
           alert(res['msg']);

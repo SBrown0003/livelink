@@ -29,7 +29,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let user of users$.list">
+              <tr *ngFor="let user of userList">
                 <td>{{ user.registration_id }}</td>
                 <td>{{ user.field_anon_firstname }}</td>
                 <td>{{ user.field_anon_lastname }}</td>
@@ -57,7 +57,7 @@
     </div>
   </div>
 </div>
-  
+
 <ng-template #content let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title" style="text-align: center">User Detail</h4>
